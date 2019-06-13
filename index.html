@@ -1,0 +1,332 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <!--
+  <script src="./resources/jsapi" type="text/javascript"></script>
+  <script type="text/javascript" async>google.load("jquery", "1.3.2");</script>
+ -->
+<style type="text/css">
+  body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight:300;
+    font-size:18px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1100px;
+  }
+  h1 {
+    font-weight:300;
+  }
+  h2 {
+    font-weight:300;
+  }
+
+  .disclaimerbox {
+    background-color: #eee;
+    border: 1px solid #eeeeee;
+    border-radius: 10px ;
+    -moz-border-radius: 10px ;
+    -webkit-border-radius: 10px ;
+    padding: 20px;
+  }
+
+  video.header-vid {
+    height: 140px;
+    border: 1px solid black;
+    border-radius: 10px ;
+    -moz-border-radius: 10px ;
+    -webkit-border-radius: 10px ;
+  }
+
+  img.header-img {
+    height: 140px;
+    border: 1px solid black;
+    border-radius: 10px ;
+    -moz-border-radius: 10px ;
+    -webkit-border-radius: 10px ;
+  }
+
+  img.rounded {
+    border: 0px solid #eeeeee;
+    border-radius: 10px ;
+    -moz-border-radius: 10px ;
+    -webkit-border-radius: 10px ;
+
+  }
+
+  a:link,a:visited
+  {
+    color: #1367a7;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #208799;
+  }
+
+  td.dl-link {
+    height: 160px;
+    text-align: center;
+    font-size: 22px;
+  }
+
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+
+
+  .layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 30px;
+    margin-bottom: 5px;
+  }
+
+  .vert-cent {
+    position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+  }
+
+  hr
+  {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  }
+</style>
+
+
+
+    <title>Detecting Photoshopped Faces by Scripting Photoshop</title>
+    <meta property="og:image" content="https://peterwang512.github.io/FALdetector/images/teaser.png">
+    <meta property="og:title" content="Detecting Photoshopped Faces By Scripting Photoshop">
+    <meta property='og:video' content='https://www.youtube.com/watch?v=TUootD36Xm0'/>
+  </head>
+
+  <body>
+        <br>
+          <center>
+            <span style="font-size:34px">Detecting Photoshopped Faces by Scripting Photoshop</span><br><br>
+          <table align="center" width="850px">
+            <tbody><tr>
+                    <td align="center" width="205px">
+              <center>
+                <span style="font-size:20px"><a href="http://peterwang512.github.io">Sheng-Yu Wang</a><sup>1</sup></span>
+                </center>
+                </td>
+                    <td align="center" width="175px">
+              <center>
+                <span style="font-size:20px"><a href="http://www.oliverwang.info">Oliver Wang</a><sup>2</sup></span>
+                </center>
+                </td>
+                    <td align="center" width="175px">
+              <center>
+                <span style="font-size:20px"><a href="http://andrewowens.com">Andrew Owens</a><sup>1</sup></span>
+                </center>
+                </td>
+                    <td align="center" width="175px">
+              <center>
+                <span style="font-size:20px"><a href="http://richzhang.github.io">Richard Zhang</a><sup>2</sup></span>
+                </center>
+                </td>
+                    <td align="center" width="175px">
+              <center>
+                <span style="font-size:20px"><a href="http://www.eecs.berkeley.edu/~efros/">Alexei A. Efros</a><sup>1</sup></span>
+                </center>
+                </td>
+            </tr>
+        </tbody></table>
+
+          <table align="center" width="700px">
+            <tbody><tr>
+                    <td align="center" width="100px">
+              <center>
+                    <span style="font-size:20px"></span>
+                </center>
+                </td>
+                    <td align="center" width="250px">
+              <center>
+                    <span style="font-size:20px"><sup>1</sup>UC Berkeley</span>
+                </center>
+                </td>
+                    <td align="center" width="250px">
+              <center>
+                    <span style="font-size:20px"><sup>2</sup>Adobe Research</span>
+                </center>
+                </td>
+                    <td align="center" width="100px">
+              <center>
+                    <span style="font-size:20px"></span>
+                </center>
+                </td>
+        </tr></tbody></table>
+          <table align="center" width="700px">
+            <tbody><tr>
+                    <td align="center" width="50px">
+              <center>
+                    <span style="font-size:18px"></span>
+                </center>
+                </td>
+                    <td align="center" width="200px">
+              <center>
+                <br>
+                <span style="font-size:20px">Code <a href="https://github.com/peterwang512/FALdetector"> [GitHub]</a></span>
+                </center>
+                </td>
+                    <td align="center" width="200px">
+              <center>
+                <br>
+                <span style="font-size:20px">Paper <a href="https://peterwang512.github.io"> <!-- [Paper] -->[Coming soon]</a></span>
+                </center>
+                </td>
+
+        </tr></tbody></table>
+          </center>
+        <br>
+        <table align="center" width="980px">
+          <tbody><tr>
+                  <td width="400px">
+            <center>
+                      <img class="rounded" src="./images/teaser.png" width="980px">
+                      <br>
+          </center>
+                  </td>
+                  </tr>
+                  </tbody></table>
+
+        <br>
+      <hr>
+
+        <center><h2>Abstract</h2></center>
+        Most malicious photo manipulations are created using standard image editing tools, such as Adobe Photoshop. We present a method for detecting one very popular Photoshop manipulation -- image warping applied to human faces -- using a model trained entirely using fake images that were automatically generated by scripting Photoshop itself. We show that our model outperforms humans at the task of recognizing manipulated images, can predict the specific location of edits, and in some cases can be used to "undo" a manipulation to reconstruct the original, unedited image. We demonstrate that the system can be successfully applied to artist-created image manipulations.<br>
+
+        <hr><center><h2 id="slides_video">Video</h2></center>
+        <p align="center">
+<iframe width="660" height="395" src="https://www.youtube.com/embed/TUootD36Xm0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen align="center"></iframe></p>
+          <center>
+            <span style="font-size:20px"><a href="https://www.dropbox.com/s/fy0kihreilkck18/detect_photoshop.pptx?dl=0">[Slides (33.6 MB)]</a><span style="display:inline-block; width: 100px;"></span><a href="./presentation.pdf">[PDF Slides (4.7 MB)]</a></span></span>
+          </center>
+          <br><hr><center><h2>Training Warping Detectors</h2></center><table align="center" width="900px">
+
+          <tbody><tr>
+                <!-- <td align=center width=600px> --><!-- </td> -->
+        </tr>
+
+        </tbody></table><table align="center" width="800px">
+          <tbody><tr>
+                    <td align="center" width="800px">
+            <center>
+              </center></td><td><a href="https://github.com/peterwang512/FALdetector">
+              <img class="round" style="width:800px" src="./images/train.png"></a>
+            </td>
+        </tr>
+      </tbody></table>
+
+      <br>
+
+        <center>
+        <span style="font-size:22px">Try our code! <a href="https://github.com/peterwang512/FALdetector">[GitHub]</a></span>
+<!--       <br>
+          <br><hr><center><h2>In-the-Wild Image Splice Dataset</h2></center><table align="center" width="900px">
+
+          <tbody><tr>
+        </tr>
+
+        </tbody></table><table align="center" width="800px">
+          <tbody><tr>
+                    <td align="center" width="800px">
+            <center>
+              </center></td><td>
+              <img class="round" style="width:800px" src="./images/mask_sample.jpg">
+            </td>
+        </tr>
+      </tbody></table>
+
+      <br>
+        <center>
+        <span style="font-size:22px"><a href="in_wild/in_wild.tar.gz">[Download (89.2 MB)]</a>
+        <br>
+        </span></center><table align="center" width="800px">
+        <tbody><tr></tr>
+      </tbody></table>
+      <br> -->
+
+      <hr>
+        <center><h2>Paper</h2></center><table align="center" width="700" px="">
+
+          <tbody><tr>
+          <td><a href="https://peterwang512.github.io"><img class="layered-paper-big" style="height:175px" src="./images/firstpg.png"></a></td>
+          <td><span style="font-size:12pt">S.-Y. Wang, O. Wang, A. Owens, R. Zhang, A. A. Efros,</span><br>
+          <b><span style="font-size:12pt">Detecting Photoshopped Faces by Scripting Photoshop</span></b><br>
+          <span style="font-size:12pt">In Arxiv, 2019. (<a href="https://peterwang512.github.io">(Coming soon)</a>).</span>
+          </td>
+
+          <br>
+          <table align="center" width="600px">
+            <tbody>
+              <tr>
+                <td>
+                  <center>
+                    <span style="font-size:22px">
+                      <a href="./cite.txt" target="_blank">[Bibtex]</a>
+                    </span>
+                  </center>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      <br>
+
+      <br><hr>
+
+
+        <table align="center" width="1100px">
+          <tbody><tr>
+                  <td width="400px">
+            <left>
+          <center><h2>Acknowledgements</h2></center>
+          We thank Daichi Ito and Adam Pintek for contributing to our artist testset, and
+          Jacob Huh for the helpful discussions. This work was supported, in part, by DARPA MediFor
+          and UC Berkeley Center for Long-Term Cybersecurity. The views, opinions and/or findings expressed are those of the authors and should not be interpreted as representing the official views or policies of the Department of Defense or the U.S. Government.
+          <br>
+          <br>
+          This website template is borrowed from <a href="https://minyoungg.github.io/selfconsistency/">our dear forensics fellow</a>.
+      </left>
+    </td>
+       </tr>
+    </tbody></table>
+
+    <br><br>
+
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70157890-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-70157890-3');
+  </script>
+
+
+</body></html>
