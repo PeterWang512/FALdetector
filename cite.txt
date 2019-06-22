@@ -1,0 +1,6 @@
+@article{wang2019detecting,
+  title={Detecting Photoshopped Faces by Scripting Photoshop},
+  author={Wang, Sheng-Yu and Wang, Oliver and Owens, Andrew and Zhang, Richard and Efros, Alexei A},
+  journal={arXiv preprint arXiv:1906.05856},
+  year={2019}
+}
