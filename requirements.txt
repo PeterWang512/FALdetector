@@ -1,0 +1,8 @@
+dlib
+mmcv
+scipy
+numpy
+matplotlib
+opencv_python
+Pillow
+torch>=0.4.0
