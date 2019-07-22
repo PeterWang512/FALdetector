@@ -16,11 +16,11 @@ def fill_up_weights(up):
 
 
 class DRNSeg(nn.Module):
-    def __init__(self, classes, gpu_id, pretrained_model=None, use_torch_up=False):
+    def __init__(self, classes, gpu_id, pretrained_drn=False,
+            pretrained_model=None, use_torch_up=False):
         super(DRNSeg, self).__init__()
-        pretrained_res = pretrained_model == None
 
-        model = drn_c_26(pretrained=pretrained_res)
+        model = drn_c_26(pretrained=pretrained_drn)
         self.base = nn.Sequential(*list(model.children())[:-2])
         if pretrained_model:
             self.load_pretrained(pretrained_model, gpu_id)
