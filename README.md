@@ -6,7 +6,7 @@
 [Richard Zhang<sup>2</sup>](https://richzhang.github.io/),
 [Alexei A. Efros<sup>1</sup>](https://people.eecs.berkeley.edu/~efros/). <br>
 UC Berkeley<sup>1</sup>, Adobe Research<sup>2</sup>. <br>
-In [arXiv, 2019](https://arxiv.org/abs/1906.05856).
+In [ICCV, 2019](https://arxiv.org/abs/1906.05856).
 
 
 <img src='https://peterwang512.github.io/FALdetector/images/teaser.png' align="center" width=900>
