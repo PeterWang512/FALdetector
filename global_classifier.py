@@ -27,13 +27,16 @@ def load_classifier(model_path, gpu_id):
 tf = transforms.Compose([transforms.ToTensor(),
                          transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                               std=[0.229, 0.224, 0.225])])
-def classify_fake(model, img_path, no_crop=False):
+def classify_fake(model, img_path, no_crop=False, model_file=None):
     # Data preprocessing
     im_w, im_h = Image.open(img_path).size
     if no_crop:
         face = Image.open(img_path).convert('RGB')
     else:
-        faces = face_detection(img_path, verbose=False)
+        if model_file is None:
+            faces = face_detection(img_path, verbose=False)
+        else:
+            faces = face_detection(img_path, verbose=False, model_file=model_file)
         if len(faces) == 0:
             print("no face detected by dlib, exiting")
             sys.exit()
