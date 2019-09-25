@@ -46,7 +46,10 @@ def classify_fake(model, img_path, no_crop=False, model_file=None):
 
     # Prediction
     with torch.no_grad():
-        prob = model(face_tens.unsqueeze(0))[0].sigmoid().cpu().item()
+        if torch.cuda.is_available():
+            prob = model(face_tens.unsqueeze(0))[0].sigmoid().cuda().item()
+        else:
+            prob = model(face_tens.unsqueeze(0))[0].sigmoid().cpu().item()
     return prob
 
 
