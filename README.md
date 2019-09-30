@@ -11,6 +11,7 @@ In [ICCV, 2019](https://arxiv.org/abs/1906.05856).
 
 <img src='https://peterwang512.github.io/FALdetector/images/teaser.png' align="center" width=900>
 
+<b>9/30/2019 Update</b> The code and model weights have been updated to correspond to the v2 of our paper. Note that the global classifer architecture is changed from resnet-50 to drn-c-26.
 
 ## (0) Disclaimer
 Welcome! Computer vision algorithms often work well on some images, but fail on others. Ours is like this too. We believe our work is a significant step forward in detecting and undoing facial warping by image editing tools. However, there are still many hard cases, and this is by no means a solved problem.
