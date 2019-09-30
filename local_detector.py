@@ -38,7 +38,7 @@ if __name__ == '__main__':
     else:
         device = 'cpu'
 
-    model = DRNSeg(2, None)
+    model = DRNSeg(2)
     state_dict = torch.load(model_path, map_location=device)
     model.load_state_dict(state_dict['model'])
     model.to(device)

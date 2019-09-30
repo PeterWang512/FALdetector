@@ -5,7 +5,7 @@ import torch
 from PIL import Image
 import torchvision.transforms as transforms
 
-from networks.resnet import resnet50
+from networks.drn_seg import DRNSub
 from utils.tools import *
 from utils.visualize import *
 
@@ -15,7 +15,7 @@ def load_classifier(model_path, gpu_id):
         device = 'cuda:{}'.format(gpu_id)
     else:
         device = 'cpu'
-    model = resnet50(num_classes=1)
+    model = DRNSub(1)
     state_dict = torch.load(model_path, map_location='cpu')
     model.load_state_dict(state_dict['model'])
     model.to(device)
@@ -27,13 +27,14 @@ def load_classifier(model_path, gpu_id):
 tf = transforms.Compose([transforms.ToTensor(),
                          transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                               std=[0.229, 0.224, 0.225])])
-def classify_fake(model, img_path, no_crop=False):
+def classify_fake(model, img_path, no_crop=False,
+                  model_file='utils/dlib_face_detector/mmod_human_face_detector.dat'):
     # Data preprocessing
     im_w, im_h = Image.open(img_path).size
     if no_crop:
         face = Image.open(img_path).convert('RGB')
     else:
-        faces = face_detection(img_path, verbose=False)
+        faces = face_detection(img_path, verbose=False, model_file=model_file)
         if len(faces) == 0:
             print("no face detected by dlib, exiting")
             sys.exit()

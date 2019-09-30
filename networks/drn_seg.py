@@ -1,7 +1,8 @@
 import math
 import torch
 import torch.nn as nn
-from networks.drn import drn_a_50, drn_d_54, drn_c_26
+from networks.drn import drn_c_26
+
 
 def fill_up_weights(up):
     w = up.weight.data
@@ -16,14 +17,14 @@ def fill_up_weights(up):
 
 
 class DRNSeg(nn.Module):
-    def __init__(self, classes, gpu_id, pretrained_drn=False,
+    def __init__(self, classes, pretrained_drn=False,
             pretrained_model=None, use_torch_up=False):
         super(DRNSeg, self).__init__()
 
         model = drn_c_26(pretrained=pretrained_drn)
         self.base = nn.Sequential(*list(model.children())[:-2])
         if pretrained_model:
-            self.load_pretrained(pretrained_model, gpu_id)
+            self.load_pretrained(pretrained_model)
 
         self.seg = nn.Conv2d(model.out_dim, classes,
                              kernel_size=1, bias=True)
@@ -54,9 +55,9 @@ class DRNSeg(nn.Module):
         for param in self.seg.parameters():
             yield param
 
-    def load_pretrained(self, pretrained_model, gpu_id):
+    def load_pretrained(self, pretrained_model):
         print("loading the pretrained drn model from %s" % pretrained_model)
-        state_dict = torch.load(pretrained_model, map_location='cuda:{}'.format(gpu_id))
+        state_dict = torch.load(pretrained_model, map_location='cpu')
         if hasattr(state_dict, '_metadata'):
             del state_dict._metadata
 
@@ -66,3 +67,29 @@ class DRNSeg(nn.Module):
 
         # load the pretrained state dict
         self.base.load_state_dict(pretrained_dict)
+
+
+class DRNSub(nn.Module):
+    def __init__(self, num_classes, pretrained_model=None, fix_base=False):
+        super(DRNSub, self).__init__()
+
+        drnseg = DRNSeg(2)
+        if pretrained_model:
+            print("loading the pretrained drn model from %s" % pretrained_model)
+            state_dict = torch.load(pretrained_model, map_location='cpu')
+            drnseg.load_state_dict(state_dict['model'])
+
+        self.base = drnseg.base
+        if fix_base:
+            for param in self.base.parameters():
+                param.requires_grad = False
+
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(512, num_classes)
+
+    def forward(self, x):
+        x = self.base(x)
+        x = self.avgpool(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
+        return x
