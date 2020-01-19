@@ -12,6 +12,7 @@ In [ICCV, 2019](https://arxiv.org/abs/1906.05856).
 <img src='https://peterwang512.github.io/FALdetector/images/teaser.png' align="center" width=900>
 
 <b>9/30/2019 Update</b> The code and model weights have been updated to correspond to the v2 of our paper. Note that the global classifer architecture is changed from resnet-50 to drn-c-26.
+
 <b>1/19/2019 Update</b> Dataset for evaluation is released! The link is [here](https://drive.google.com/file/d/1mzNxCyrUTBF7-lQGPLYT0HuUODvVvtsb/view).
 
 ## (0) Disclaimer
@@ -65,6 +66,7 @@ cd ..
 python eval.py --dataroot data --global_pth weights/global.pth --local_pth weights/local.pth --gpu_id 0
 ```
 The following are the models' performances on the released set:
+
 |Accuracy|  AP |PSNR Increase|
 |:------:|:---:|:-----------:|
 |   93.9%|98.9%|        +2.66|
